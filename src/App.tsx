@@ -1,34 +1,23 @@
 import "./App.css";
-import Form from "./components/Form";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import addPosition from "./redux/addPosition";
+import Form from "./components/Form";
+import List from "./components/List";
+import { Pricelist } from "./service";
 
 export default function App() {
 
-  type Position = {
-    work: string,
-    price: number,
+  type RootState = {
+    list: {
+      pricelist: Pricelist,
+    }
   }
 
-  type Action = {
-    type: string,
-    payload: Position,
-  }
-
-  type State = {list: (state: {
-    pricelist: {
-        work: string;
-        price: number;
-    }[];
-}, action: Action) => {
-    pricelist: {
-        work: string;
-        price: number;
-    }[];
-}}
+  const { pricelist } = useSelector((state: RootState) => state.list);
 
   const dispatch = useDispatch();
-  const { pricelist } = useSelector((state: any) => state.list)
+  
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -47,7 +36,7 @@ export default function App() {
   return (
     <>
       <Form handleSubmit={handleSubmit}/>
-      <List />
+      <List pricelist={pricelist} />
     </>
   )
 }

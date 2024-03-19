@@ -1,4 +1,5 @@
 import { ADD_POSITION } from "./actions";
+import { Position } from "../service";
 
 const initialState = {
   pricelist: [
@@ -21,11 +22,6 @@ const initialState = {
   ]
 }
 
-type Position = {
-  work: string,
-  price: number,
-}
-
 type Action = {
   type: string,
   payload: Position,
@@ -34,9 +30,11 @@ type Action = {
 const pricelistReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ADD_POSITION:
+      const arr = [...state.pricelist];
+      arr.push(action.payload);
       return {
         ...state,
-        pricelist: state.pricelist.push(action.payload),
+        pricelist: arr,
       }
     default:
       return state;

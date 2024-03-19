@@ -1,9 +1,5 @@
 import { ADD_POSITION } from "./actions"
-
-type Position = {
-  work: string,
-  price: number,
-}
+import { Position } from "../service"
 
 const addPosition = (position: Position) => {
   return {

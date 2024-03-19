@@ -1,0 +1,8 @@
+.position__work, .position__price {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.position__btn {
+  cursor: pointer;
+}

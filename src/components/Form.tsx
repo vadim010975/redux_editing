@@ -1,5 +1,4 @@
 import { FC } from "react";
-import "./Form.css";
 
 const Form: FC<{ handleSubmit: React.FormEventHandler<HTMLFormElement> }> = ({ handleSubmit }) => {
 
