@@ -1,9 +1,9 @@
 export type Position = {
   work: string,
-  price: number,
+  price: string,
 }
 
 export type Pricelist = {
   work: string,
-  price: number,
+  price: string,
 }[];

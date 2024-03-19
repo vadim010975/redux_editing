@@ -1,20 +1,21 @@
 import "./App.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import addPosition from "./redux/addPosition";
+import { addPosition, removePosition, setFormValues, showBtnCancel, hideBtnCancel } from "./redux/actionCreators";
 import Form from "./components/Form";
 import List from "./components/List";
-import { Pricelist } from "./service";
+import { Pricelist, Position } from "./service";
 
 export default function App() {
 
   type RootState = {
-    list: {
-      pricelist: Pricelist,
-    }
+    list: { pricelist: Pricelist},
+    form: { formValues: Position},
   }
 
   const { pricelist } = useSelector((state: RootState) => state.list);
+
+  const { formValues } = useSelector((state: RootState) => state.form);
 
   const dispatch = useDispatch();
   
@@ -25,18 +26,24 @@ export default function App() {
     const formData = new FormData(target);
     const data = Object.fromEntries(formData);
     const work = data.work as string;
-    const price = Number(data.price);
-    if (Number.isNaN(price)) {
-      return;
-    }
-    target.reset();
+    const price = data.price as string;
     dispatch(addPosition({work, price}));
+    dispatch(hideBtnCancel());
+  }
+
+  const handleEdit = (position: Position) => {
+    dispatch(setFormValues(position));
+    dispatch(showBtnCancel());
+  }
+
+  const handleRemove = (position: Position) => {
+    dispatch(removePosition(position));
   }
 
   return (
     <>
-      <Form handleSubmit={handleSubmit}/>
-      <List pricelist={pricelist} />
+      <Form handleSubmit={handleSubmit} formVal={formValues} />
+      <List pricelist={pricelist} handleEdit={handleEdit} handleRemove={handleRemove} />
     </>
   )
 }

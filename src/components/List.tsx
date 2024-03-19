@@ -1,7 +1,13 @@
 import { FC } from "react";
-import { Pricelist } from "../service";
+import { Position, Pricelist } from "../service";
 
-const List: FC<{pricelist: Pricelist}> = ({ pricelist }) => {
+type ListProps = {
+  pricelist: Pricelist,
+  handleEdit: (position: Position) => void,
+  handleRemove: (position: Position) => void,
+}
+
+const List: FC<ListProps> = ({ pricelist, handleEdit, handleRemove }) => {
 
   return (
     <>
@@ -10,8 +16,8 @@ const List: FC<{pricelist: Pricelist}> = ({ pricelist }) => {
           <li className="position" key={key}>
             <div className="position__work">{position.work}</div>
             <div className="position__price">{position.price}</div>
-            <button className="position__btn">edit</button>
-            <button className="position__btn">X</button>
+            <button onClick={() => {handleEdit(position)}} className="position__btn">edit</button>
+            <button onClick={() => {handleRemove(position)}} className="position__btn">X</button>
           </li>
         ))}
       </ul>
